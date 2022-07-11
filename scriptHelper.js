@@ -16,22 +16,22 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
    */
 }
 
-function validateInput(testInput) {
-//       window.addEventListener("load", function() {
-//       let form = document.querySelector("form");
-//       form.addEventListener("submit", function(event) {
-//          let pilotNameInput = document.querySelector("input[name=pilotName]");
-//          let copilotNameInput = document.querySelector("input[name=copilotName]");
-//          let fuelLevelInput = document.querySelector("input[name=fuelLevel]");
-//          let cargoMassInput = document.querySelector("input[name=cargoMass]");
-//          if (pilotNameInput.value === "" || copilotNameInput.value === "" || fuelLevelInput.value === "" ||cargoMassInput.value === "" ) {
-//             alert("All fields are required!");
-//             // stop the form submission
-//             event.preventDefault();
-//          }
-//       });
-//    });
-}
+function validateInput(event) {
+    let pilotNameInput = document.querySelector("input[name=pilotName]");
+    let copilotNameInput = document.querySelector("input[name=copilotName]");
+    let fuelLevelInput = document.querySelector("input[name=fuelLevel]");
+    let cargoMassInput = document.querySelector("input[name=cargoMass]");
+
+    if (pilotNameInput.value === "" || copilotNameInput.value === "" || fuelLevelInput.value === "" || cargoMassInput.value === "" ) {
+        alert("All fields are required!")};
+
+    if (isNAN(cargoMassInput.value) || (fuelLevelInput.value)) {
+        alert ("Cargo Mass and Fuel Levels must be entered as a number.")}
+
+    if (isNAN(pilotNameInput.value) || (copilotNameInput.value) === false) {
+        alert ("Pilot Name and CoPilot Name must be entered as a word.") }
+        event.preventDefault();
+         };
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
    
