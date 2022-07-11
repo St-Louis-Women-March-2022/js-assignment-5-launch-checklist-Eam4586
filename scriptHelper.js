@@ -2,19 +2,20 @@
 require('isomorphic-fetch');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
-   // Here is the HTML formatting for our mission target div.
-   /*
-                <h2>Mission Destination</h2>
-                <ol>
-                    <li>Name: </li>
-                    <li>Diameter: </li>
-                    <li>Star: ${star}</li>
-                    <li>Distance from Earth: </li>
-                    <li>Number of Moons: </li>
-                </ol>
-                <img src="">
-   */
-}
+    const destination = document.getElementById(“output”);
+    destination.innerHTML = 
+    <div>
+        <h2>Mission Destination</h2>
+            <ol>
+                <li>Name: ${json.name}</li>
+                <li>Diameter: ${json.diameter}</li>
+                <li>Star: ${json.star}</li>
+                <li>Distance from Earth: ${json.distance}</li>
+                <li>Number of Moons: ${json.moons}</li>
+            </ol>
+            <img src="${json.image}">
+</div>
+};
 
 function validateInput(event) {
     let pilotNameInput = document.querySelector("input[name=pilotName]");
@@ -34,11 +35,34 @@ function validateInput(event) {
          };
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
+
+    element.setAttribute("pilotStatus", "${pilotNameInput} Ready");
+    element.setAttribute("copilotStatus", "${copilotNameInput} Ready");
    
-}
+    if (fuelLevelInput<10,000){
+        element.setAttribute("fuelStatus",`There is not enough fuel for the journey.`);
+        element.setAttribute("launchStatus", `Shuttle not ready for launch`);
+        launchStatus.style.color = "red";
+        faultyItems.style.visibility = "visible";
+    }
+
+    else if (cargoMassInput>10,000){
+        element.setAttribute("launchStatus", `Shuttle not ready for launch`);
+        launchStatus.style.color = "red";
+        faultyItems.style.visibility = "visible";
+    }
+
+    else {
+        element.setAttribute("launchStatus", `Shuttle is ready for launch`);
+        launchStatus.style.color = "green";
+    }
+};
 
 async function myFetch() {
-    let planetsReturned;
+    fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response) {
+        const planetsReturned = document.getElementById("name");
+} );
+    
 
     planetsReturned = await fetch().then( function(response) {
         });
@@ -47,6 +71,7 @@ async function myFetch() {
 }
 
 function pickPlanet(planets) {
+
 }
 
 module.exports.addDestinationInfo = addDestinationInfo;
