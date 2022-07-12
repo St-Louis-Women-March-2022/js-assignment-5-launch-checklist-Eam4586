@@ -66,11 +66,13 @@ async function myFetch() {
 
     return planetsReturned;
 });
+    });
+};
 
 function pickPlanet(planets) {
     let index = Math.floor(Math.random()*planets);
     return index;
-}
+};
 
 module.exports.addDestinationInfo = addDestinationInfo;
 module.exports.validateInput = validateInput;
