@@ -1,5 +1,5 @@
 // Write your helper functions here!
-require('isomorphic-fetch');
+// require('isomorphic-fetch');
 
 function addDestinationInfo(document, name, diameter, star, distance, moons, imageUrl) {
     const destination = document.getElementById(missionTarget);
@@ -15,82 +15,87 @@ function addDestinationInfo(document, name, diameter, star, distance, moons, ima
             <img src="${imageUrl}">`;
 }
 
-function validateInput(event) {
-    let inputNumber = Number(event);
+function validateInput(inputNumber) {
+    // let inputNumber = Number(event);
     if (inputNumber === ""){
         return "empty";
     }
 
-    else if (isNAN(inputNumber)){
+    else if (isNaN(inputNumber)){
         return "not number";
     }
 
-    else if (isNAN(inputNumber)===false){
+    else if (isNaN(inputNumber)===false){
         return "is a number"
     }
 };
 
 function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
 
-    element.setAttribute("pilotStatus", "${pilotNameInput} Ready");
-    element.setAttribute("copilotStatus", "${copilotNameInput} Ready");
+    let pilotStatus = document.getElementById ("pilotStatus")
+    let copilotStatus = document.getElementById ("copilotStatus")
+    let fuelStatus = document.getElementById ("fuelStatus")
+    let cargoStatus = document.getElementById ("cargoStatus")
+    let launchStatus = document.getElementById ("launchStatus")
 
-let pilotNameInput = document.querySelector("input[name=pilotName]");
-let copilotNameInput = document.querySelector("input[name=copilotName]");
-let fuelLevelInput = document.querySelector("input[name=fuelLevel]");
-let cargoMassInput = document.querySelector("input[name=cargoMass]");
+    pilotStatus.innerHTML =`Pilot ${pilot} is ready for launch.`;
+    copilotStatus.innerHTML =`Copilot ${copilot} is ready for launch`;
 
-    if (validateInput (pilotNameInput) === "empty" || validateInput (copilotNameInput) === "empty" || validateInput (fuelLevelInput) === "empty" || validateInput (cargoMassInput) === "empty" ) {
-        alert("All fields are required!");}
-
-    else if (validateInput (cargoMassInput) === "not number" || validateInput (fuelLevelInput) === "not number") {
-        alert ("Cargo Mass and Fuel Levels must be entered as a number.");}
-
-    else if (validateInput (pilotNameInput) === "is a number" || validateInput (copilotNameInput) === "is a number"); {
-        alert ("Pilot Name and CoPilot Name must be entered as a word.");}
-
-    // else {    
-   
-    //     if (fuelLevelInput<10,000){
-    //         element.setAttribute("fuelStatus",`There is not enough fuel for the journey.`);
-    //         element.setAttribute("launchStatus", `Shuttle not ready for launch`);
-    //         launchStatus.style.color = "red";
-    //         faultyItems.style.visibility = "visible";
-    //     }
-
-    //     else if (cargoMassInput>10,000){
-    //         element.setAttribute("launchStatus", `Shuttle not ready for launch`);
-    //         launchStatus.style.color = "red";
-    //         faultyItems.style.visibility = "visible";
-    //     }
-
-    //     else {
-    //         element.setAttribute("launchStatus", `Shuttle is ready for launch`);
-    //         launchStatus.style.color = "green";
-    //     }
-    // }
+    if (validateInput (pilot) === "empty" || validateInput (copilot) === "empty" || validateInput (fuelLevel) === "empty" || validateInput (cargoLevel) === "empty" ) {
+        alert("All fields are required!");
     }
 
-async function myFetch() {
-    fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response) {
-        response.json().then(function(json){
-            const planetsReturned = document.getElementById("name");
+    else if (validateInput (cargoLevel) === "not number" || validateInput (fuelLevel) === "not number") {
+        alert ("Cargo Mass and Fuel Levels must be entered as numbers.");
+    }
+
+    else if (validateInput (pilot) === "is a number" || validateInput (copilot) === "is a number") {
+        alert ("Pilot Name and CoPilot Name must be entered as a word.");
     
-    planetsReturned = await fetch().then( function(response) {
+    } else {    
+
+        if (fuelLevel>=10000 && cargoLevel<10000){
+            fuelStatus.innerHTML =`There is enough fuel for the journey.`;
+            cargoStatus.innerHTML = `Cargo is light enough for launch.`
+            launchStatus.innerHTML = `Shuttle is ready for launch`;
+            launchStatus.style.color = "green";
+            list.style.visibility = "visible";
+        }
+        
+        else if (fuelLevel<10000){
+            fuelStatus.innerHTML =`There is not enough fuel for the journey.`;
+            launchStatus.innerHTML = `Shuttle not ready for launch`;
+            launchStatus.style.color = "red";
+            list.style.visibility = "visible";
+        }
+
+        else if (cargoLevel>10000){
+            cargoStatus.innerHTML = `Cargo is too heavy.`
+            launchStatus.innerHTML = `Shuttle not ready for launch`;
+            launchStatus.style.color = "red";
+            list.style.visibility = "visible";
+        };
+    };
+    };
+
+async function myFetch() {
+    let planetsReturned;
+    
+    planetsReturned = await fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response) {
+        return response.json()
+        
         });
 
     return planetsReturned;
-});
-    });
 };
 
 function pickPlanet(planets) {
-    let index = Math.floor(Math.random()*planets);
-    return index;
+    let index = Math.floor(Math.random()*planets.length);
+    return planets[index];
 };
 
-module.exports.addDestinationInfo = addDestinationInfo;
-module.exports.validateInput = validateInput;
-module.exports.formSubmission = formSubmission;
-module.exports.pickPlanet = pickPlanet; 
-module.exports.myFetch = myFetch;
+// module.exports.addDestinationInfo = addDestinationInfo;
+// module.exports.validateInput = validateInput;
+// module.exports.formSubmission = formSubmission;
+// module.exports.pickPlanet = pickPlanet; 
+// module.exports.myFetch = myFetch;
